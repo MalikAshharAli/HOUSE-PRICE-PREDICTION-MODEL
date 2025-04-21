@@ -1,0 +1,94 @@
+
+# 🏠 Linear Regression: Predicting House Prices
+
+This notebook uses a **linear regression model** to predict house prices based on:
+- Total Area (in sqft)
+- Number of Bedrooms
+- Number of Bathrooms
+
+---
+
+## 📦 1. Importing Libraries
+
+```python
+import pandas as pd
+import numpy as np
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error
+```
+
+---
+
+## 📁 2. Loading the Data
+
+```python
+df = pd.read_csv("real_estate_main.csv")
+df[['total_area', 'bedroom', 'bathroom', 'Price']].head()
+```
+
+---
+
+## ✂️ 3. Selecting Features and Target
+
+```python
+data = df[['total_area', 'bedroom', 'bathroom', 'Price']].dropna()
+X = data[['total_area', 'bedroom', 'bathroom']]
+y = data['Price']
+```
+
+---
+
+## 🔀 4. Splitting the Data
+
+```python
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+```
+
+---
+
+## 🤖 5. Training the Model
+
+```python
+from sklearn.linear_model import LinearRegression
+model = LinearRegression()
+model.fit(X_train, y_train)
+```
+
+---
+
+## 📈 6. Making Predictions and Evaluating
+
+```python
+from sklearn.metrics import mean_squared_error
+y_pred = model.predict(X_test)
+rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+print("Root Mean Squared Error:", rmse)
+```
+
+**RMSE (Error):** 16,936,772.89
+
+---
+
+## 🔍 7. Model Coefficients
+
+```python
+print("Coefficients:", model.coef_)
+print("Intercept:", model.intercept_)
+```
+
+**Coefficients:** [3270.739736462421, 2464672.442879921, 6585944.931917803]  
+**Intercept:** -13,085,631.81
+
+---
+
+## 📊 8. Prediction Formula
+
+```text
+Price = 3270.74 * total_area + 2464672.44 * bedroom + 6585944.93 * bathroom + -13,085,631.81
+```
+
+You can use this formula to estimate the house price!
+
+---
